@@ -1,0 +1,20 @@
+{
+    "configurations": [
+        {
+            "name": "ESP32",
+            "includePath": [
+                "${workspaceFolder}/main",
+                "${workspaceFolder}/include",
+                "/home/loc/esp/esp-idf/components/**",
+                "${workspaceFolder}/main/**",
+                "${workspaceFolder}/build/include/**"
+            ],
+            "defines": ["ESP_PLATFORM"],
+            "compilerPath": "/home/loc/.espressif/tools/xtensa-esp-elf/esp-13.2.0_20240530/xtensa-esp-elf/bin/xtensa-esp32-elf-gcc",
+            "cStandard": "c17",
+            "cppStandard": "gnu++17",
+            "intelliSenseMode": "gcc-x64"
+        }
+    ],
+    "version": 4
+}
