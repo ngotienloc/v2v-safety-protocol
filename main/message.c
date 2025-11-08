@@ -2,36 +2,28 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdint.h>
-// Create message
-void message_create(message_t *msg, msg_type_t type,
-                    uint8_t src_id, uint8_t dest_id,
-                    const uint8_t *data, uint8_t len, uint16_t seq)
-{
-    if(len > MSG_MAX_PALYLOAD_LEN) len = MSG_MAX_PALYLOAD_LEN;
 
-    msg->type = type;
-    msg->src_id = src_id;
-    msg->dest_id = dest_id;
-    msg->seq = seq;
-    msg->payload_len = len;
-
-    memcpy(msg->payload, data, len); 
-   // msg->checksum = message_checksum(msg);
+#include "message.h"
+#include <string.h>  
+// Tạo broadcast base message
+void init_broadcast_base(message_t *msg, uint16_t messageID, uint32_t vehicleID, uint16_t speed, uint16_t heading, uint16_t elevation, gps_t gpsnow, uint32_t timestamp) {
+    memset(msg, 0, sizeof(message_t));
+    msg->messageID = messageID;
+    msg->vehicleID = vehicleID;
+    msg->timestamp = timestamp;
+    msg->payload.broadcast_base.speed = speed;
+    msg->payload.broadcast_base.heading = heading;
+    msg->payload.broadcast_base.elevation = elevation;
+    msg->payload.broadcast_base.gpsnow = gpsnow;
 }
 
-// Checksum
-
-// Printlog
-// ===== In ra log =====
-void message_print(const message_t *msg)
-{
-    printf("---- MESSAGE ----\n");
-    printf("Type: %02X | Src: %d | Dest: %d | Seq: %d\n",
-           msg->type, msg->src_id, msg->dest_id, msg->seq);
-    
-
-    printf("Payload: ");
-    for (int i = 0; i < msg->payload_len; i++)
-        printf("%02X ", msg->payload[i]);
-    printf("\n-----------------\n");
+// Tạo broadcast emergency message
+void init_broadcast_emergency(message_t *msg, uint16_t messageID, uint32_t vehicleID, uint16_t type_emergency, gps_t gpsnow, uint16_t speed, uint32_t timestamp) {
+    memset(msg, 0, sizeof(message_t));
+    msg->messageID = messageID; 
+    msg->vehicleID = vehicleID;
+    msg->timestamp = timestamp;
+    msg->payload.broadcast_emergency.type_emergency = type_emergency;
+    msg->payload.broadcast_emergency.gpsnow = gpsnow;
+    msg->payload.broadcast_emergency.speed = speed;
 }

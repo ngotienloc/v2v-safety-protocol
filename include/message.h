@@ -10,11 +10,12 @@ typedef struct
 } gps_t;
 
 typedef enum { 
-    BROADCAST_BASE_MESSAGE,        // 0
-    BROADCAST_ALERT_MESSAGE,       // 1
-    BROADCAST_EMERGENCY_MESSAGE,   // 2
-    UNICAST_MESSAGE,               // 3
-} message_id;
+    MSG_BROADCAST_BASE = 0,
+    MSG_EMERGENCY_CHANGELANE,
+    MSG_EMERGENCY_BRAKE,
+    MSG_EMERGENCY_OVERSPEED
+} message_type;
+
 
 
 typedef struct {
@@ -30,18 +31,15 @@ typedef struct {
         } broadcast_base; 
         struct{
             uint16_t type_emergency; 
-            gps_t gpsnow; 
-        } broadcast_emergency; 
-        struct {
-            uint16_t lane_id; 
+            gps_t gpsnow;
             uint16_t speed; 
-        } unicast_emergency; 
+        } broadcast_emergency; 
     } payload; 
+    uint8_t checksum; 
 } message_t;
 
-void init_broadcast_base(message_t *msg, uint32_t vehicleID, uint16_t speed, uint16_t heading, uint16_t elevation, gps_t gpsnow, uint32_t timestamp);
-void init_broadcast_emergency(message_t *msg, uint32_t vehicleID, uint16_t type_emergency, gps_t gpsnow, uint32_t timestamp);
-void init_unicast_emergency(message_t *msg, uint32_t vehicleID, uint16_t lane_id, uint16_t speed, uint32_t timestamp);
+void init_broadcast_base(message_t *msg,uint16_t messageID, uint32_t vehicleID, uint16_t speed, uint16_t heading, uint16_t elevation, gps_t gpsnow, uint32_t timestamp);
+void init_broadcast_emergency(message_t *msg, uint16_t messageID,uint32_t vehicleID, uint16_t type_emergency, gps_t gpsnow, uint16_t speed, uint32_t timestamp);
 
 
 #endif

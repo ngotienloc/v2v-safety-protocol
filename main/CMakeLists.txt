@@ -5,5 +5,6 @@ idf_component_register(
          "message.c"
          "encryption.c"
          "utils.c"
-    INCLUDE_DIRS "../include"  # folder chứa message.h, protocol.h, ...
+         "sensor_data.c"
+    INCLUDE_DIRS "../include" 
 )

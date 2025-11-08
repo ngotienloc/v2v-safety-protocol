@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "sensor_data.h": "c"
+        "sensor_data.h": "c",
+        "string.h": "c"
     }
 }
